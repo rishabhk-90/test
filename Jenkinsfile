@@ -24,11 +24,10 @@ pipeline {
         }
 
         stage('Remove Image') {
-        steps{
-          script{
-            docker rmi "$registry:$BUILD_NUMBER"
-        }
-        }
+      steps{
+        sh "docker rmi $registry:$BUILD_NUMBER"
+      }
+
    }   
 }
 }
