@@ -1,7 +1,7 @@
 pipeline {
   environment {
     registry = "rishabhk90/devops-certification"
-    registryCredential = 'dockerhub'
+    registryCredential = 'dockerhub1'
   }
   agent any
   stages {
@@ -16,7 +16,7 @@ pipeline {
         stage('Deploy Image') {
         steps{
             script {
-            docker.withRegistry( '', 'dockerhub' ) {
+            docker.withRegistry( '', 'dockerhub1' ) {
                 dockerImage.push()
             }
             }
