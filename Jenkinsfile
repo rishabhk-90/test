@@ -31,7 +31,7 @@ pipeline {
         }
    }   
 }
-
+}
 node {
     stage('Execute Image'){
         def customImage = docker.build("rishabhk90/devops-certification:${env.BUILD_NUMBER}")
@@ -39,5 +39,4 @@ node {
             sh 'echo This is the code running inside the container.'
         }
     }
-}
 }
