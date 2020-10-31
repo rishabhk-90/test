@@ -8,7 +8,7 @@ pipeline {
         stage('Building image') {
         steps{
             script {
-            dockerImage = docker.build registry + ":${env.BUILD_NUMBER}"
+            dockerImage = docker.build registry + ":$BUILD_NUMBER"
             }
         }
         }
@@ -22,17 +22,20 @@ pipeline {
             }
         }
         }
-        stage('Execute Image'){
+
+        stage('Remove Image') {
         steps{
-          script {
-            
-            dockerImage.inside {
-            sh 'echo "This is the code running inside the container."'
-            }
-          }
-        } 
-    }
-}
+            sh "docker rmi $registry:$BUILD_NUMBER"
+        }
+        }
+   }   
 }
 
-   
+node {
+    stage('Execute Image'){
+        def customImage = docker.build("rishabhk90/devops-certification:${env.BUILD_NUMBER}")
+        customImage.inside {
+            sh 'echo This is the code executing inside the container.'
+        }
+    }
+}
