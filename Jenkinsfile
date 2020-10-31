@@ -25,7 +25,7 @@ pipeline {
 
         stage('Remove Image') {
         steps{
-            sh 'docker rmi $registry:$BUILD_NUMBER'
+            sh 'docker rmi "rishabhk90/devops-certification:${env.BUILD_NUMBER}"'
         }
         }
    }   
