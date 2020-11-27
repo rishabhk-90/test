@@ -1,0 +1,23 @@
+{
+  "name": "rishabh-nodeapp",
+  "version": "1.0.0",
+  "description": "Hello World program using NodeJS",
+  "main": "main.js",
+  "scripts": {
+    "test": "node test.js",
+    "start": "node main.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rishabhk-90/DevopsDocker"
+  },
+  "keywords": [
+    "node",
+    "docker",
+    "dockerfile"
+  ],
+  "author": "Rishabh Kumar",
+  "license": "ISC",
+  "devDependencies": { "test": ">=0.1.0" }
+}
+

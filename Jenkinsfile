@@ -1,41 +1,28 @@
-pipeline {
-  environment {
-    registry = "rishabhk90/devops-certification"
-    registryCredential = 'dockerhub1'
-  }
-  agent any
-  stages {
-        stage('Building image') {
-        steps{
-            script {
-            dockerImage = docker.build registry + ":$BUILD_NUMBER"
-            }
-        }
-        }
-
-        stage('Deploy Image') {
-        steps{
-            script {
-            docker.withRegistry( '', 'dockerhub1' ) {
-                dockerImage.push()
-            }
-            }
-        }
-        }
-
-        stage('Remove Image') {
-        steps{
-            sh 'docker rmi "rishabhk90/devops-certification:${env.BUILD_NUMBER}"'
-        }
-        }
-   }   
-}
-
 node {
-    stage('Execute Image'){
-        def customImage = docker.build("rishabhk90/devops-certification:${env.BUILD_NUMBER}")
-        customImage.inside {
-            sh 'echo This is the code executing inside the container.'
+    def app
+
+    stage('Clone repository') {
+        /* Clone Repository to Workspace */
+        checkout scm
+    }
+
+    stage('Build image') {
+        /* Building the actual image */
+        app = docker.build("rishabhk90/devops-docker")
+    }
+
+    stage('Test image') {
+        app.inside {
+            echo "Test has passed"
         }
+    }
+
+    stage('Push image') {
+        
+        docker.withRegistry('https://registry.hub.docker.com', 'docker-hub') {
+            app.push("${env.BUILD_NUMBER}")
+            app.push("latest")
+            } 
+                echo "Pushing Docker Build to DockerHub"
     }
 }
